@@ -1,19 +1,22 @@
 import unittest
 
 from src.point import Point
-from src.line import Line
+from src.line import Line, LineBuilder
 
 
 class TestLine(unittest.TestCase):
 
     def get_line_list_from_points(self):
         return [
-            Line.new_from_points(Point(1, 1), Point(2, 2)),
-            Line.new_from_points(Point(0, 0), Point(2, 4))
+            LineBuilder.from_points(Point(1, 1), Point(2, 2)),
+            LineBuilder.from_points(Point(0, 0), Point(2, 4))
         ]
 
     def get_line_list_from_functions(self):
-        return [Line.new_from_function(1, 0), Line.new_from_function(2, 0)]
+        return [
+            LineBuilder.from_function(1, 0),
+            LineBuilder.from_function(2, 0)
+        ]
 
     def test_is_parallel(self):
         line_list_from_points = self.get_line_list_from_points()

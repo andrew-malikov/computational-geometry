@@ -1,4 +1,5 @@
 from src.point import Point
+from src.line import LineBuilder, Line
 
 
 class Segment():
@@ -27,3 +28,16 @@ class Segment():
             return False
 
         return True
+
+    @classmethod
+    def is_intersects(s1, s2):
+        l1, l2 = LineBuilder.from_segment(s1), LineBuilder.from_segment(s2)
+        intersect = Line.get_intersect(l1, l2)
+
+        if not intersect:
+            return False
+
+        if s1.contain_point(intersect) and s2.contain_point(intersect):
+            return True
+
+        return False
