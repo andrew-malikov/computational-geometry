@@ -2,6 +2,9 @@ from math import degrees, atan2
 
 
 class Point():
+    """
+    TODO: Update components count
+    """
 
     def __init__(self, x, y):
         self.x = x

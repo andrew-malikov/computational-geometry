@@ -1,4 +1,5 @@
 from src.point import Point
+from src.multilib import sign
 
 
 class Line():
@@ -7,6 +8,35 @@ class Line():
         self.a = a
         self.b = b
         self.c = c
+
+    def substitute(self, point):
+        return self.a * point.x + self.b * point.y + self.c
+
+    def contain_point(self, point: Point):
+        return self.substitute(point) == 0
+
+    def is_points_in_plane(self, points: list):
+        if len(points) == 1:
+            return True
+
+        point_index = 0
+        original_plane = 0
+
+        for i in range(point_index, len(points)):
+            plane = sign(self.substitute(points[i]))
+            if plane != 0:
+                original_plane = plane
+                point_index = i + 1
+                break
+
+        if point_index >= len(points):
+            return True
+
+        for i in range(point_index, len(points)):
+            plane = sign(self.substitute(points[i]))
+            if plane != original_plane and plane != 0:
+                return False
+        return True
 
     @staticmethod
     def is_parallel(l1, l2):
