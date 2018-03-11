@@ -47,14 +47,20 @@ class Line():
         """
         If the lines intersect, return point, otherwise false
         """
-        if not Line.is_parallel(l1, l2):
+        if Line.is_parallel(l1, l2):
             return False
 
-        y = (l2.a * l1.c - l1.a * l2.c) / (l1.a * l2.c - l2.a * l1.b)
-
-        x = (-l1.b * y - l1.c) / l1.a
+        if l1.a:
+            y = (l2.a * l1.c - l1.a * l2.c) / (l1.a * l2.b - l2.a * l1.b)
+            x = (-l1.b * y - l1.c) / l1.a
+        elif l2.a:
+            y = (l2.c * l1.a - l1.c * l2.a) / (l1.b * l2.a - l2.b * l1.a)
+            x = (-l2.c - l2.b * y) / l2.a
 
         return Point(x, y)
+
+    def __str__(self):
+        return "{0}x + {1}y + {2} = 0".format(self.a, self.b, self.c)
 
 
 class LineBuilder():
@@ -76,3 +82,20 @@ class LineBuilder():
     @staticmethod
     def from_segment(segment):
         return LineBuilder.from_points(segment.a, segment.b)
+
+
+class LineUtils(Line):
+
+    def __init__(self, a, b, c):
+        super(a, b, c)
+
+    @staticmethod
+    def is_intersect_with_segment(line, segment):
+        line_from_segment = LineBuilder.from_segment(segment)
+
+        intersect = Line.get_intersect(line, line_from_segment)
+
+        if segment.contain_point(intersect):
+            return True
+
+        return False
