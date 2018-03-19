@@ -8,13 +8,16 @@ class TestSegment(unittest.TestCase):
 
     def get_segments(self):
         return [
-            Segment(Point(0, 0), Point(4, 4)),
-            Segment(Point(0, 4), Point(4, 0)),
+            Segment(Point(5, 5), Point(1, 1)),
+            Segment(Point(1, 1), Point(1, 6)),
             Segment(Point(0, -1), Point(7, -1)),
             Segment(Point(-2, 6), Point(-2, -4)),
             Segment(Point(-4, 4), Point(4, -4)),
             Segment(Point(-8, -1), Point(5, 1)),
-            Segment(Point(1, 2), Point(6, 0))
+            Segment(Point(1, 2), Point(6, 0)),
+            Segment(Point(-5, 0), Point(5, 0)),
+            Segment(Point(0, 5), Point(0, -5)),
+            Segment(Point(-5, 5), Point(-1, 1))
         ]
 
     def test_contain_point(self):
