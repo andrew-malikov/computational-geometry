@@ -18,7 +18,7 @@ class Segment():
         left_part = (point.x - self.a.x) * (self.b.y - self.a.y)
         right_part = (self.b.x - self.a.x) * (point.y - self.a.y)
 
-        if not left_part == right_part:
+        if not round(left_part, 5) == round(right_part, 5):
             return False
 
         if not min(self.a.x, self.b.x) <= point.x <= max(self.a.x, self.b.x):
