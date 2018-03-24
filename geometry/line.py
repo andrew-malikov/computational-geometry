@@ -1,5 +1,6 @@
 from geometry.point import Point
 from geometry.multilib import sign
+from math import sqrt
 
 
 class Line():
@@ -82,6 +83,33 @@ class LineBuilder():
     @staticmethod
     def from_segment(segment):
         return LineBuilder.from_points(segment.a, segment.b)
+
+    @staticmethod
+    def orthogonal(line: Line, point: Point):
+        '''
+        return new Line orthogonal line and intersecting the point
+        '''
+        c = line.b * (-point.x) + line.a * (-point.y)
+        return Line(line.b, line.a, c)
+
+    @staticmethod
+    def parallel(line: Line, distance):
+        if line.a:
+            point = Point(-line.c / line.a, 0)
+        else:
+            point = Point(0, -line.c / line.b)
+        c = -line.a * point.x - line.b * point.y + distance * sqrt(
+            line.a**2 + line.b**2)
+        return Line(line.a, line.b, c)
+
+    @staticmethod
+    def bisector(a, b):
+        a_length = a.length
+        b_length = b.length
+        return LineBuilder.from_points(
+            b.a,
+            Point(a.b.x / a_length + b.b.x / b_length,
+                  a.b.y / a_length + b.b.y / b_length))
 
 
 class LineUtils(Line):

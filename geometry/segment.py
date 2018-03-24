@@ -1,5 +1,7 @@
+from math import sqrt
+
+from geometry.line import Line, LineBuilder
 from geometry.point import Point
-from geometry.line import LineBuilder, Line
 
 
 class Segment():
@@ -28,6 +30,9 @@ class Segment():
             return False
 
         return True
+
+    def length(self):
+        return sqrt((self.b.x - self.a.x)**2 + (self.b.y - self.a.y)**2)
 
     @staticmethod
     def is_intersects(s1, s2):
