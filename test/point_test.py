@@ -1,6 +1,6 @@
 import unittest
 
-from src.point import Point
+from geometry.point import Point
 
 
 class TestPoint(unittest.TestCase):

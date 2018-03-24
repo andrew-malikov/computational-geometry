@@ -1,6 +1,6 @@
 import unittest
 
-from src.multilib import sign
+from geometry.multilib import sign
 
 
 class TestMultilib(unittest.TestCase):

@@ -1,7 +1,7 @@
 import unittest
 
-from src.point import Point
-from src.segment import Segment
+from geometry.point import Point
+from geometry.segment import Segment
 
 
 class TestSegment(unittest.TestCase):

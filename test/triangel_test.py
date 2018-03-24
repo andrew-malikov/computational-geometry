@@ -1,7 +1,7 @@
 import unittest
 
-from src.point import Point
-from src.triangel import Triangel, PointOrientation
+from geometry.point import Point
+from geometry.triangel import Triangel, PointOrientation
 
 
 class TestTriangel(unittest.TestCase):

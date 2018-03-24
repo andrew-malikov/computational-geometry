@@ -1,7 +1,7 @@
 import unittest
 
-from src.point import Point
-from src.line import Line, LineBuilder
+from geometry.point import Point
+from geometry.line import Line, LineBuilder
 
 
 class TestLine(unittest.TestCase):

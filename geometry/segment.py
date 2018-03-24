@@ -1,5 +1,5 @@
-from src.point import Point
-from src.line import LineBuilder, Line
+from geometry.point import Point
+from geometry.line import LineBuilder, Line
 
 
 class Segment():

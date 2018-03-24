@@ -1,6 +1,6 @@
 from enum import Enum
 
-from src.line import LineBuilder
+from geometry.line import LineBuilder
 
 
 class PointOrientation(Enum):

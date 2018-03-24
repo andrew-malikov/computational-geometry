@@ -1,5 +1,5 @@
-from src.point import Point
-from src.multilib import sign
+from geometry.point import Point
+from geometry.multilib import sign
 
 
 class Line():
