@@ -60,6 +60,9 @@ class Line():
 
         return Point(x, y)
 
+    def get_orthogonal(self):
+        return Line(self.b, self.a, self.c)
+
     def __str__(self):
         return "{0}x + {1}y + {2} = 0".format(self.a, self.b, self.c)
 
