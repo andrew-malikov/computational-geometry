@@ -107,8 +107,8 @@ class LineBuilder():
 
     @staticmethod
     def bisector(a, b):
-        a_length = a.length
-        b_length = b.length
+        a_length = a.length()
+        b_length = b.length()
         return LineBuilder.from_points(
             b.a,
             Point(a.b.x / a_length + b.b.x / b_length,
