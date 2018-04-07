@@ -1,6 +1,8 @@
 from enum import Enum
+from math import fabs, acos, degrees
 
 from geometry.line import LineBuilder
+from geometry.segment import Segment
 
 
 class PointOrientation(Enum):
@@ -9,10 +11,28 @@ class PointOrientation(Enum):
     ON_POLYGON = 'on_polygon'
 
 
+class TriangelType(Enum):
+    RIGHT = 'right'
+    OBTUSE = 'obtuse'
+    ACUTE = 'acute'
+
+
 class Triangel():
 
     def __init__(self, p1, p2, p3):
         self.points = [p1, p2, p3]
+        self.sides = [
+            Segment(p1, p2).length(),
+            Segment(p2, p3).length(),
+            Segment(p3, p1).length()
+        ]
+
+    @staticmethod
+    def is_triangel(a, b, c):
+        a = fabs(a)
+        b = fabs(b)
+        c = fabs(c)
+        return a + b > c and a + c > b and c + b > a
 
     def get_point_orientation(self, point):
         lines = self.get_lines()
@@ -37,3 +57,25 @@ class Triangel():
 
     def get_point(self, offset):
         return self.points[offset % len(self.points)]
+
+    def get_type(self):
+
+        s = self.sides
+
+        angles = [
+            degrees(acos((s[1]**2 + s[2]**2 - s[0]**2) / (2 * s[1] * s[2]))),
+            degrees(acos((s[0]**2 + s[2]**2 - s[1]**2) / (2 * s[0] * s[2]))),
+            degrees(acos((s[0]**2 + s[1]**2 - s[2]**2) / (2 * s[0] * s[1])))
+        ]
+
+        angles = list(map(lambda x: round(x, 2), angles))
+
+        for angle in angles:
+            if angle == 90:
+                return TriangelType.RIGHT
+
+        for angle in angles:
+            if angle > 90:
+                return TriangelType.OBTUSE
+
+        return TriangelType.ACUTE

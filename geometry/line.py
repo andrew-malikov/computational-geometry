@@ -98,8 +98,8 @@ class LineBuilder():
         '''
         return new Line orthogonal line and intersecting the point
         '''
-        c = line.b * (-point.x) + line.a * (-point.y)
-        return Line(line.b, -line.a, c)
+        c = line.b * point.x + line.a * (-point.y)
+        return Line(-line.b, line.a, c)
 
     @staticmethod
     def parallel(line: Line, distance):
