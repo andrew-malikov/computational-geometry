@@ -1,6 +1,6 @@
 from geometry.point import Point
-from geometry.multilib import sign
-from math import sqrt
+from geometry.multilib import sign, symbolic_sign
+from math import sqrt, fabs
 
 
 class Line():
@@ -64,7 +64,13 @@ class Line():
         return Line(self.b, self.a, self.c)
 
     def __str__(self):
-        return "{0}x + {1}y + {2} = 0".format(self.a, self.b, self.c)
+        signs = [
+            symbolic_sign(self.a),
+            symbolic_sign(self.b),
+            symbolic_sign(self.c)
+        ]
+        values = [fabs(self.a), fabs(self.b), fabs(self.c)]
+        return f"{signs[0]}{values[0]}x {signs[1]}{values[1]}y {signs[2]}{values[2]} = 0"
 
 
 class LineBuilder():
@@ -93,7 +99,7 @@ class LineBuilder():
         return new Line orthogonal line and intersecting the point
         '''
         c = line.b * (-point.x) + line.a * (-point.y)
-        return Line(line.b, line.a, c)
+        return Line(line.b, -line.a, c)
 
     @staticmethod
     def parallel(line: Line, distance):
