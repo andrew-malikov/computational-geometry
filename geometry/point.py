@@ -16,6 +16,9 @@ class Point():
             return 360 + arc
         return arc
 
+    def __str__(self):
+        return f"({self.x},{self.y})"
+
     @staticmethod
     def compare_arc(a, b):
         return a.get_arc() - b.get_arc()

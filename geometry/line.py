@@ -2,6 +2,8 @@ from geometry.point import Point
 from geometry.multilib import sign, symbolic_sign
 from math import sqrt, fabs
 
+from functools import reduce
+
 
 class Line():
 
@@ -70,7 +72,11 @@ class Line():
             symbolic_sign(self.c)
         ]
         values = [fabs(self.a), fabs(self.b), fabs(self.c)]
-        return f"{signs[0]}{values[0]}x {signs[1]}{values[1]}y {signs[2]}{values[2]} = 0"
+        parts = [
+            f"{signs[0]}{values[0]}x\t", f"{signs[1]}{values[1]}y\t",
+            f"{signs[2]}{values[2]} = 0"
+        ]
+        return reduce(lambda output, x: output + x, parts)
 
 
 class LineBuilder():
