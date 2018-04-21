@@ -24,4 +24,4 @@ def get_optimal_point(points):
             min_length = length
             point = points[i]
 
-    return point
+    return [point, min_length]

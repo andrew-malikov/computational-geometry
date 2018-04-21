@@ -1,9 +1,17 @@
 from math import sqrt, fabs
+from functools import reduce
+from enum import Enum
 
 from geometry.point import Point
 from geometry.segment import Segment
 from geometry.line import LineBuilder
 from geometry.multilib import symbolic_sign
+
+
+class CircleOrientation(Enum):
+    EQUAL = 'equal'
+    INTERSECT = 'intersect'
+    NOT_INTERSECT = 'not_intersect'
 
 
 class Circle():
@@ -48,10 +56,51 @@ class Circle():
             LineBuilder.from_points(point, tangent_points[1])
         ]
 
+    @staticmethod
+    def get_intersect(c1, c2):
+        length = Segment(c1.center, c2.center).length()
+        points = []
+
+        if length == 0 and c1.radius == c2.radius:
+            return {"orientation": CircleOrientation.EQUAL, "points": points}
+
+        if c1.radius + c2.radius < length:
+            return {
+                "orientation": CircleOrientation.NOT_INTERSECT,
+                "points": points
+            }
+
+        if fabs(c1.radius - c2.radius) > length:
+            return {
+                "orientation": CircleOrientation.NOT_INTERSECT,
+                "points": points
+            }
+
+        b = (c2.radius**2 - c1.radius**2 + length**2) / (2 * length)
+        a = length - b
+        h = sqrt(c1.radius**2 - a**2)
+
+        p0 = Point(c1.center.x + a / length * (c2.center.x - c1.center.x),
+                   c1.center.y + a / length * (c2.center.y - c1.center.y))
+
+        points.append(
+            Point(p0.x + h / length * (c2.center.y - c1.center.y),
+                  p0.y - h / length * (c2.center.x - c1.center.x)))
+
+        points.append(
+            Point(p0.x - h / length * (c2.center.y - c1.center.y),
+                  p0.y + h / length * (c2.center.x - c1.center.x)))
+
+        return {"orientation": CircleOrientation.INTERSECT, "points": points}
+
     def __str__(self):
         signs = [symbolic_sign(-self.center.x), symbolic_sign(-self.center.y)]
         values = [fabs(self.center.x), fabs(self.center.y)]
-        return f"(x{signs[0]}{values[0]})^2 + (y{signs[1]}{values[1]})^2" + f" = {self.radius}^2"
+        parts = [
+            f"(x{signs[0]}{values[0]})^2",
+            "\t+\t" + f"(y{signs[1]}{values[1]})^2" + f"\t=\t{self.radius}^2"
+        ]
+        return reduce(lambda output, x: output + x, parts)
 
 
 class CircleBuilder():
