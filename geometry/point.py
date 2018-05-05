@@ -16,6 +16,9 @@ class Point():
             return 360 + arc
         return arc
 
+    def is_equal(self, point):
+        return self.x == point.x and self.y == point.y
+
     def __str__(self):
         return f"({self.x},{self.y})"
 

@@ -1,5 +1,6 @@
 from geometry.vector import Vector2Builder
 from geometry.segment import Segment
+from geometry.line import LineBuilder
 from geometry.multilib import sign
 
 from math import fabs
@@ -26,9 +27,9 @@ class Polygon():
 
         length = len(segments)
         for i in range(0, length):
-            for j in range(i + 2, length - 1):
+            for j in range(i + 2, i + length - 1):
 
-                if Segment.is_intersects(segments[i], segments[j]):
+                if Segment.is_intersects(segments[i], segments[j % length]):
                     return False
 
         return True
