@@ -1,23 +1,22 @@
 from geometry.line import LineBuilder
 
 
-def get_optimal_line(segments):
+def get_optimal_line(points):
     max_points = 0
     optimal_line = None
 
-    for i in range(0, len(segments)):
-        line = LineBuilder.from_segment(segments[i])
-        points = 0
+    points_len = len(points)
+    for i in range(0, points_len - 1):
+        for j in range((i + 1) % points_len, points_len):
+            line = LineBuilder.from_points(points[i], points[j])
+            match_points = 0
 
-        for j in range(0, len(segments)):
-            if line.contain_point(segments[j].a):
-                points += 1
+            for k in range(0, points_len):
+                if line.contain_point(points[k]):
+                    match_points += 1
 
-            if line.contain_point(segments[j].b):
-                points += 1
+            if match_points >= max_points:
+                max_points = match_points
+                optimal_line = line
 
-        if points >= max_points:
-            max_points = points
-            optimal_line = line
-
-    return [optimal_line, max_points]
+    return [max_points, optimal_line]
