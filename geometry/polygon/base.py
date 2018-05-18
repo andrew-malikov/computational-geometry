@@ -1,6 +1,5 @@
 from geometry.vector import Vector2Builder
 from geometry.segment import Segment
-from geometry.line import LineBuilder
 from geometry.multilib import sign
 
 from math import fabs

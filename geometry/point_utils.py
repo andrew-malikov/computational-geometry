@@ -25,3 +25,31 @@ def get_optimal_point(points):
             point = points[i]
 
     return point
+
+
+def get_far_point(points):
+    far_point = None
+    far_distance = 0
+
+    for point in points:
+        distance = point.get_distance()
+
+        if distance >= far_distance:
+            far_point = point
+            far_distance = distance
+
+    return far_point
+
+
+def get_left_up_far_point(points):
+    far_point = None
+    far_index = -inf
+
+    for point in points:
+        index = -point.x + point.y
+
+        if index >= far_index:
+            far_point = point
+            far_index = index
+
+    return far_point
