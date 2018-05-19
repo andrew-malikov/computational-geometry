@@ -1,5 +1,4 @@
 from math import inf
-from operator import methodcaller
 
 from geometry.polygon.base import Polygon
 from geometry.vector import Vector2Builder
@@ -15,18 +14,18 @@ def graham_algorithm(points: list):
     for point in points:
         point.add_offset(-offset[0], -offset[1])
 
-    sorted_points = sorted(points, key=methodcaller('get_arc'))
+    bubble(points)
+    sorted_points = points
 
     polygon_points = [sorted_points[0], sorted_points[1]]
     length = len(sorted_points)
     for i in range(2, length):
-        vector_points = [
-            sorted_points[(i - 1) % length], sorted_points[i],
-            sorted_points[(i + 1) % length]
-        ]
+        point = sorted_points[i]
 
-        if get_angle(vector_points) >= 0:
-            polygon_points.append(sorted_points[i])
+        while get_angle([polygon_points[-2], polygon_points[-1], point]) < 0:
+            polygon_points.pop()
+
+        polygon_points.append(sorted_points[i])
 
     for point in polygon_points:
         point.add_offset(offset[0], offset[1])
@@ -51,3 +50,25 @@ def get_angle(points: list):
     v1 = Vector2Builder().from_points(points[0], points[1])
     v2 = Vector2Builder().from_points(points[1], points[2])
     return v1.skew_product(v2)
+
+
+def bubble(points: list):
+    length = len(points)
+    for i in range(0, length):
+        swapped = False
+        for i in range(0, length - i - 1):
+            if points[i].get_arc() > points[i + 1].get_arc():
+                hold = points[i + 1]
+                points[i + 1] = points[i]
+                points[i] = hold
+                swapped = True
+            elif points[i].get_arc() == points[i + 1].get_arc():
+                if points[i].get_distance() > points[i + 1].get_distance():
+                    hold = points[i + 1]
+                    points[i + 1] = points[i]
+                    points[i] = hold
+                    swapped = True
+        if not swapped:
+            break
+
+    return points
